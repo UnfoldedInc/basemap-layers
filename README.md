@@ -22,3 +22,19 @@ Thus, this spec is part of my attempt to create a workaround.
 
 1. Snap vector features to the terrain mesh on the fly using [kylebarron/snap-features-to-mesh][kylebarron/snap-features-to-mesh]. This adds Z values to every coordinate of the vector feature.
 2. Style each feature using a deck.gl layer.
+
+## Comparison with deck.gl/json
+
+deck.gl already supports a [type of JSON layer description][deck.gl/json]. They
+have a [live preview][deckgl/json_preview] of deck.gl/json as well.
+
+[deck.gl/json]: https://deck.gl/#/documentation/submodule-api-reference/deckgl-json/overview
+[deckgl/json_preview]: https://deck.gl/playground/
+
+There are a couple of issues with their approach that don't fit my needs:
+
+- Each layer is tied to a single data source.
+
+    I want to take a _single source_, i.e. a vector tile layer, and render
+    _many_ layers from that source. I don't see a way to do that with the
+    existing deckgl/json capabilities.
