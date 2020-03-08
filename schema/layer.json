@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "layer.json",
+  "definitions": {
+    "Layer": {
+      "type": "object",
+      "allOf": [
+        {"$ref": "#/definitions/LayerCommon"},
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "TextLayer"
+              }
+            }
+          },
+          "then": {
+            "$ref": "textLayer.json#/definitions/TextLayer"
+          }
+        }
+      ]
+    },
+    "LayerCommon": {
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
