@@ -40,3 +40,7 @@ There are a couple of issues with their approach that don't fit my needs:
     I want to take a _single source_, i.e. a vector tile layer, and render
     _many_ layers from that source. I don't see a way to do that with the
     existing deckgl/json capabilities.
+
+deck.gl/JSON is designed to be used to define an _entire_ visualization. In
+contrast, this spec is desinged to be used to generate layers _within_ a
+`TileLayer`.
