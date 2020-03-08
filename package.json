@@ -1,5 +1,5 @@
 {
-  "name": "@kylebarron/deck-style-spec",
+  "name": "@kylebarron/deckgl-style-spec",
   "version": "0.1.0",
   "description": "A specification for styling vector tiles/GeoJSON layers using only deck.gl layers",
   "main": "lib/index.js",
@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/kylebarron/deck-style-spec.git"
   },
+  "files": [
+    "schema/*"
+  ],
   "keywords": [
     "deck.gl"
   ],
