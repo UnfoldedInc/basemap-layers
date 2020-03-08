@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/kylebarron/deck-style-spec/issues"
   },
-  "homepage": "https://github.com/kylebarron/deck-style-spec#readme"
+  "homepage": "https://github.com/kylebarron/deck-style-spec#readme",
+  "dependencies": {
+    "ajv": "^6.12.0"
+  }
 }
