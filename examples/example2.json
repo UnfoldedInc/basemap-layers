@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "Example 2",
+  "sources": {
+    "openmaptiles": {
+      "type": "vector",
+      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}"
+    }
+  },
+  "sprite": "https://maputnik.github.io/osm-liberty/sprites/osm-liberty",
+  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key={key}",
+  "layers": [
+    {
+      "id": "example_textlayer",
+      "type": "TextLayer",
+      "source": "natural_earth_shaded_relief",
+      "maxzoom": 6,
+      "sizeScale": 1,
+      "paint": {"raster-opacity": {"base": 1.5, "stops": [[0, 0.6], [6, 0.1]]}}
+    }
+  ]
+
+}
