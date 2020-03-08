@@ -1,4 +1,4 @@
-# deck-style-spec
+# deckgl-style-spec
 
 A specification for styling vector tiles/GeoJSON layers using only deck.gl
 layers. Inspired by the Mapbox Style Specification.
@@ -12,6 +12,10 @@ generates a terrain mesh on the fly using [MARTINI][martini] and overlays an
 image texture on the mesh (i.e. satellite imagery). While this is great, by
 default it hides any vector layers rendered by the underlying Mapbox GL JS,
 because those layers have elevation 0.
+
+[mapbox_3d_tweet]: https://twitter.com/Mapbox/status/1222605626053783552
+[deckgl_terrain_layer]: https://github.com/uber/deck.gl/blob/master/docs/layers/terrain-layer.md
+[martini]: https://github.com/mapbox/martini
 
 However deck.gl correctly renders vector features that have 3D coordinates.
 Thus, this spec is part of my attempt to create a workaround.
