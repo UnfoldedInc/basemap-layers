@@ -7,6 +7,14 @@
       "allOf": [
         {"$ref": "#/definitions/LayerCommon"},
         {
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["TextLayer"]
+            }
+          }
+        },
+        {
           "if": {
             "properties": {
               "type": {
