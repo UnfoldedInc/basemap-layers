@@ -30,7 +30,9 @@
     },
     "LayerCommon": {
       "required": [
-        "id"
+        "id",
+        "source",
+        "source-layer"
       ],
       "properties": {
         "id": {
@@ -39,6 +41,12 @@
         "filter": {
           "type": "array",
           "description": "Filter array conforming to Mapbox Style Spec."
+        },
+        "source": {
+          "type": "string"
+        },
+        "source-layer": {
+          "type": "string"
         }
       }
     }
