@@ -4,7 +4,8 @@
   "description": "A specification for styling vector tiles/GeoJSON layers using only deck.gl layers",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "./node_modules/.bin/jsonschema2md --input schema/ --out auto-doc/ --schema-out auto-doc/ --schema-extension json"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,8 @@
   "homepage": "https://github.com/kylebarron/deck-style-spec#readme",
   "dependencies": {
     "ajv": "^6.12.0"
+  },
+  "devDependencies": {
+    "@adobe/jsonschema2md": "^4.1.0"
   }
 }
