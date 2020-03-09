@@ -3,6 +3,8 @@
 A specification for styling vector tiles/GeoJSON layers using only deck.gl
 layers. Inspired by the Mapbox Style Specification.
 
+_A work in progress_.
+
 ## Motivation
 
 Currently, Mapbox GL JS does not have 3D terrain support, and despite [an
