@@ -29,9 +29,16 @@
       ]
     },
     "LayerCommon": {
+      "required": [
+        "id"
+      ],
       "properties": {
         "id": {
           "type": "string"
+        },
+        "filter": {
+          "type": "array",
+          "description": "Filter array conforming to Mapbox Style Spec."
         }
       }
     }
