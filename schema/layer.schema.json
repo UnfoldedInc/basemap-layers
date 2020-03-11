@@ -25,6 +25,18 @@
           "then": {
             "$ref": "textLayer.json#/definitions/TextLayer"
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "PathLayer"
+              }
+            }
+          },
+          "then": {
+            "$ref": "pathLayer.json#/definitions/PathLayer"
+          }
         }
       ]
     },
