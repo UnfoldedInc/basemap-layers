@@ -1,2 +1,2 @@
-import spec from './root.json';
+import spec from './root.schema.json';
 export default spec;
