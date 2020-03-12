@@ -1,4 +1,4 @@
-# deckgl-mapbox-style-spec
+# deckgl-mapbox-style
 
 Implementation of a subset of the Mapbox Style Specification using Deck.gl
 layers.
