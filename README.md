@@ -29,6 +29,9 @@ render vector features on top of 3D terrain.
 
 [kylebarron/snap-features-to-tin]: https://github.com/kylebarron/snap-features-to-tin
 
+## Usage
+
+
 ## Layer mapping
 
 | Mapbox Layer     | Deck.gl Layer                         | Implemented? |
@@ -193,32 +196,3 @@ There are a couple of issues with their approach that don't fit my needs:
 deck.gl/JSON is designed to be used to define an _entire_ visualization. In
 contrast, this spec is desinged to be used to generate layers _within_ a
 `TileLayer`.
-
-## Usage
-
-<!--
-```js
-import { validate } from '@kylebarron/deck-style-spec';
-const style = {
-  "version": 1,
-  "name": "Example 2",
-  "sources": {
-    "openmaptiles": {
-      "type": "vector",
-      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}"
-    }
-  },
-  "sprite": "https://maputnik.github.io/osm-liberty/sprites/osm-liberty",
-  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key={key}",
-  "layers": [
-    {
-      "id": "example_textlayer",
-      "type": "TextLayer",
-      "sizeScale": 1
-    }
-  ]
-}
-validate(style);
-// true
-```
--->
