@@ -24,7 +24,7 @@ const GEOM_TYPE_XW = {
  * @param  {[Object]} globalProperties {zoom: current zoom}
  * @return {[Array[Object]]}                  Filtered features
  */
-function filterFeatures({ features, filter, globalProperties }) {
+export function filterFeatures({ features, filter, globalProperties = {} }) {
   if (!features || features.length === 0) return [];
 
   // filterFn will be a function that returns a boolean
