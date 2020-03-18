@@ -1,5 +1,7 @@
 # deckgl-mapbox-style
 
+[![Build Status](https://travis-ci.org/kylebarron/deckgl-mapbox-style.svg?branch=master)](https://travis-ci.org/kylebarron/deckgl-mapbox-style)
+
 Implementation of a subset of the Mapbox Style Specification using Deck.gl
 layers.
 
