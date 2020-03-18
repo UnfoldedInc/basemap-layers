@@ -37,7 +37,7 @@ export function parseMapboxStyle(options = {}) {
       layer,
       globalProperties
     });
-    if (!layerFeatures || layerFeatures.length === 0) return;
+    if (!layerFeatures || layerFeatures.length === 0) continue;
 
     // An array of Property objects for this specific layer
     const layerProperties = [];
