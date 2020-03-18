@@ -1,9 +1,9 @@
 import {terser} from 'rollup-plugin-terser';
 
 const config = (file, plugins = []) => ({
-    input: 'lib/index.js',
+    input: 'src/index.js',
     output: {
-        name: 'deckgl-style-spec',
+        name: 'deckgl-mapbox-style',
         format: 'umd',
         indent: false,
         file
@@ -12,6 +12,6 @@ const config = (file, plugins = []) => ({
 });
 
 export default [
-    config('dist/deckgl-style-spec.js'),
-    config('dist/deckgl-style-spec.min.js', [terser()])
+    config('dist/deckgl-mapbox-style.js'),
+    config('dist/deckgl-mapbox-style.min.js', [terser()])
 ];
