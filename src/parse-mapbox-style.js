@@ -11,6 +11,43 @@ import { SUPPORTED_MAPBOX_LAYER_TYPES } from "./constants";
 //   sourceName: "openmaptiles"
 // });
 // var zoom = 12;
+/**
+ * Generate a new deck.gl layer for each StyleJSON layer
+ *
+ * @param  {object[]} layers StyleJSON layers
+ * @return {objcet[]}        [description]
+ */
+function generateLayers(styleJson) {
+  // TODO: a source can have a `url` argument, which means it has a hosted
+  // TileJSON, whose properties need to be merged with the source defined in the
+  // StyleJSON
+  // In this case need to fetch the JSON
+  const { sources, layers } = styleJson;
+  const deckLayers = [];
+
+  for (const layer of layers) {
+    deckLayers.push(generateLayer(sources, layer));
+  }
+
+  return deckLayers;
+}
+
+var layer = style.layers[1];
+function generateLayer(sources, layer, { zoom }) {
+  const { type } = layer;
+  if (type === "raster") {
+    return generateBitmapLayer(sources, layer);
+  }
+
+  const globalProperties = { zoom };
+  const layer = {};
+  const dataTransform = constructDataTransform(layer, globalProperties);
+
+  // Create new deck.gl layer
+  return {
+    dataTransform
+  };
+}
 
 // features expected to be
 // {sourceName: {layerName: [features]}}
@@ -23,7 +60,6 @@ export function parseMapboxStyle(options = {}) {
   SUPPORTED_MAPBOX_LAYER_TYPES.forEach(layer_type => {
     generatedFeatures[layer_type] = [];
   });
-
 
   // Since each feature can be styled more than once, you need to loop over
   // layers, not features
