@@ -1,6 +1,7 @@
 import { generateDeckLineFeatures } from "./generate-deck-features";
 import { findFeaturesStyledByLayer, visitProperties } from "./mapbox-style";
 import { SUPPORTED_MAPBOX_LAYER_TYPES } from "./constants";
+import { generateBitmapLayer } from "./deck-layers/bitmap";
 
 // var style = require("../tests/fixtures/style/osm-liberty.json");
 // // vt2geojson https://mbtiles.nst.guide/services/openmaptiles/us/tiles/12/666/1433.pbf > openmaptiles-12-666-1433.json
