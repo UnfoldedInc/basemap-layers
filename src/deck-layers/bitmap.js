@@ -5,8 +5,7 @@
  * @param  {object} layer   layer object from style
  * @return {object}         deck.gl BitmapLayer
  */
-export function generateBitmapLayer(sources, layer) {
-  const { type } = layer;
+export function generateRasterLayer(sources, layer) {
   const source = sources[layer.source];
   const { tileSize } = source;
 
@@ -30,4 +29,8 @@ export function generateBitmapLayer(sources, layer) {
       });
     }
   });
+}
+
+export function generateBackgroundLayer(sources, layer) {
+  // Render a tiled BitmapLayer of the given color
 }

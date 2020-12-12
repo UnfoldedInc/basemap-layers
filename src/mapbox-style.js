@@ -1,8 +1,9 @@
 import {
   latest as Reference,
-  featureFilter
+  featureFilter,
+  expression,
+  Color
 } from "@mapbox/mapbox-gl-style-spec";
-import { SUPPORTED_PROPERTY_KEYS } from "./constants";
 
 // See https://github.com/mapbox/vector-tile-spec/blob/b87a6a16abc3fcda9ea3f0a68264b40f48e039f3/2.1/vector_tile.proto#L7-L13
 const GEOM_TYPE_XW = {
@@ -61,14 +62,12 @@ export function findFeaturesStyledByLayer({
   return [];
 }
 
-export function visitProperties(layer, options, callback) {
+function visitProperties(layer, options, callback) {
   // Modified from https://github.com/mapbox/mapbox-gl-js/blob/d144fbc34ddec9e7a8fc34125d3a92558fa99318/src/style-spec/visit.js#L53-L67
   function inner(layer, propertyType) {
     const properties = layer[propertyType];
     if (!properties) return;
     Object.keys(properties).forEach(key => {
-      // Skip if not a supported property key
-      if (!SUPPORTED_PROPERTY_KEYS[layer.type].includes(key)) return;
       callback({
         layer: layer,
         path: [layer.id, propertyType, key],
@@ -104,4 +103,36 @@ function getPropertyReference(propertyName) {
   }
 
   return null;
+}
+
+export function parseProperties(layer, globalProperties) {
+  // An array of Property objects for this specific layer
+  const layerProperties = [];
+  visitProperties(layer, { paint: true }, property =>
+    layerProperties.push(parseProperty(property, globalProperties))
+  );
+
+  return layerProperties;
+}
+
+function parseProperty(property, globalProperties) {
+  const exp = expression.normalizePropertyExpression(
+    property.value,
+    property.reference
+  );
+  const result = exp.evaluate(globalProperties);
+
+  // NOTE: eventually we could potentially return the function itself
+  // (exp.evaluate), if deck.gl were able to call it with an object {zoom:
+  // number}
+  // Exp objects have a 'kind' key, which is sometimes `constant`. When not
+  // constant, would return a function, but would return the literal constant
+  // where possible for performance.
+
+  // Coerce Color to rgba array
+  if (result instanceof Color) {
+    return { [property["key"]]: result.toArray() };
+  }
+
+  return { [property["key"]]: result };
 }

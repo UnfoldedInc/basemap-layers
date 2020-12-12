@@ -1,2 +1,1 @@
-export { parseMapboxStyle } from "./parse-mapbox-style";
-export { featuresArrayToObject } from "./util";
+export { generateLayers } from "./parse-mapbox-style";
