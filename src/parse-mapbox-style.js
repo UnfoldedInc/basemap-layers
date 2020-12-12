@@ -1,22 +1,15 @@
 import { findFeaturesStyledByLayer } from "./mapbox-style";
 
-// var style = require("../tests/fixtures/style/osm-liberty.json");
-// // vt2geojson https://mbtiles.nst.guide/services/openmaptiles/us/tiles/12/666/1433.pbf > openmaptiles-12-666-1433.json
-// var featureCollection = require("../tests/fixtures/geojson/openmaptiles-12-666-1433.json");
-// var features = featuresArrayToObject({
-//   features: featureCollection.features,
-//   layerName: "vt_layer",
-//   sourceName: "openmaptiles"
-// });
-// var zoom = 12;
+// globalProperties' type:
+// https://github.com/maplibre/maplibre-gl-js/blob/2112766af5d68a7ea885156c8c186c72a4e912ca/src/style-spec/expression/index.js#L41-L47
+const globalProperties = { zoom: 0 };
 
 /**
  * Generate a new deck.gl layer for each StyleJSON layer
  *
  * @param  {object[]} layers StyleJSON layers
- * @return {objcet[]}        [description]
+ * @return {object[]}        An array of deck.gl layers
  */
-const globalProperties = { zoom };
 export function generateLayers(styleJson, globalProperties) {
   // TODO: a source can have a `url` argument, which means it has a hosted
   // TileJSON, whose properties need to be merged with the source defined in the
@@ -40,6 +33,14 @@ const FILTERABLE_LAYERS = [
   "fill-extrusion"
 ];
 
+/**
+ * Generate single deck.gl layer from Mapbox layer
+ *
+ * @param  {object} sources          sources object
+ * @param  {object} layer            mapbox style layer
+ * @param  {object} globalProperties object with current zoom level
+ * @return {object}                  deck.gl layer
+ */
 function generateLayer(sources, layer, globalProperties) {
   const { type } = layer;
 
@@ -56,7 +57,12 @@ function generateLayer(sources, layer, globalProperties) {
   // Make dataTransform function to filter data on each deck.gl layer
   let dataTransform;
   if (FILTERABLE_LAYERS.includes(type)) {
-    dataTransform = constructDataTransform(layer, globalProperties);
+    dataTransform = data =>
+      findFeaturesStyledByLayer({
+        features: data,
+        layer,
+        globalProperties
+      });
   }
 
   // Render deck.gl layers
@@ -97,17 +103,4 @@ function generateLayer(sources, layer, globalProperties) {
     default:
       console.warn(`Invalid/unsupported layer type: ${type}`);
   }
-}
-
-function constructDataTransform(layer, globalProperties) {
-  // Filter layer's data
-  function dataTransform(data) {
-    return findFeaturesStyledByLayer({
-      features: data,
-      layer,
-      globalProperties
-    });
-  }
-
-  return dataTransform;
 }

@@ -6,7 +6,7 @@ import {
 } from "@mapbox/mapbox-gl-style-spec";
 
 // See https://github.com/mapbox/vector-tile-spec/blob/b87a6a16abc3fcda9ea3f0a68264b40f48e039f3/2.1/vector_tile.proto#L7-L13
-const GEOM_TYPE_XW = {
+const GEOM_TYPES = {
   Point: 1,
   MultiPoint: 1,
   LineString: 2,
@@ -18,12 +18,12 @@ const GEOM_TYPE_XW = {
 /**
  * Apply Mapbox Style Spec filter on features
  *
- * @param  {[Array[Object]]} features   Note that each feature must have a `properties` object and a
- *  `type` value. `type` must be an integer, and should correspond to the geometry type.
+ * @param  {object[]} features   Note that each feature must have a `properties` object and a
+ *  `type` value or a `geometry` object with a `type` value.
  *
- * @param  {[Array]} filter           filter definition
- * @param  {[Object]} globalProperties {zoom: current zoom}
- * @return {[Array[Object]]}                  Filtered features
+ * @param  {array} filter           filter definition
+ * @param  {object} globalProperties {zoom: current zoom}
+ * @return {object[]}                Filtered features
  */
 export function filterFeatures({ features, filter, globalProperties = {} }) {
   if (!features || features.length === 0) return [];
@@ -33,13 +33,17 @@ export function filterFeatures({ features, filter, globalProperties = {} }) {
 
   // Filter array of features based on filter function
   return features.filter(feature => {
+    // Coerce string geometry type to integer type
     if (![1, 2, 3].includes(feature.type)) {
-      feature.type = GEOM_TYPE_XW[feature.geometry.type];
+      feature.type = GEOM_TYPES[feature.geometry.type];
     }
+
     return filterFn(globalProperties, feature);
   });
 }
 
+// TODO: update this function to accept an array of features as input, not an
+// object
 // features expected to be
 // {sourceName: {layerName: [features]}}
 export function findFeaturesStyledByLayer({
