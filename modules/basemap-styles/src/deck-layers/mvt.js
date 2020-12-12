@@ -8,14 +8,9 @@ export function generateFillLayer(sources, layer, properties, dataTransform) {
     minzoom,
     maxzoom,
     dataTransform
-  })
-
+  });
 }
 
-export function generateLineLayer(sources, layer) {
+export function generateLineLayer(sources, layer) {}
 
-}
-
-export function generateCircleLayer(sources, layer) {
-
-}
+export function generateCircleLayer(sources, layer) {}

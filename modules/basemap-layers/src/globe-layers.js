@@ -45,26 +45,10 @@ const BASEMAP_RASTER_PARAMETERS = {
   blendEquation: [GL.FUNC_ADD, GL.FUNC_ADD]
 };
 
-const BACKGROUND_DATA = [
-  [
-    [-180, 90],
-    [0, 90],
-    [180, 90],
-    [180, -90],
-    [0, -90],
-    [-180, -90]
-  ]
-];
+const BACKGROUND_DATA = [[[-180, 90], [0, 90], [180, 90], [180, -90], [0, -90], [-180, -90]]];
 
 const BACKGROUND_NORTH_POLE_DATA = [
-  [
-    [-180, 90],
-    [0, 90],
-    [180, 90],
-    [180, 85],
-    [0, 85],
-    [-180, 85]
-  ]
+  [[-180, 90], [0, 90], [180, 90], [180, 85], [0, 85], [-180, 85]]
 ];
 
 // TODO: This could be expanded to search for matching layer names from any Mapbox style

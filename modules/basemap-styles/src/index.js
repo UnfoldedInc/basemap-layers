@@ -1,1 +1,1 @@
-export { generateLayers } from "./parse-mapbox-style";
+export {generateLayers} from './parse-mapbox-style';

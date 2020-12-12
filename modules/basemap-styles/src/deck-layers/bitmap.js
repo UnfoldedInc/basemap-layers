@@ -7,7 +7,7 @@
  */
 export function generateRasterLayer(sources, layer) {
   const source = sources[layer.source];
-  const { tileSize } = source;
+  const {tileSize} = source;
 
   const minzoom = layer.minzoom || source.minzoom || 0;
   const maxzoom = layer.maxzoom || source.maxzoom || 0;
@@ -19,7 +19,7 @@ export function generateRasterLayer(sources, layer) {
     tileSize,
     renderSubLayers: props => {
       const {
-        bbox: { west, south, east, north }
+        bbox: {west, south, east, north}
       } = props.tile;
 
       return new BitmapLayer(props, {

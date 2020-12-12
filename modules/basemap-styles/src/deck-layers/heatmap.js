@@ -1,4 +1,1 @@
-
-export function generateHeatmapLayer(sources, layer) {
-  
-}
+export function generateHeatmapLayer(sources, layer) {}

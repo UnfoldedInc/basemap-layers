@@ -1,9 +1,4 @@
-import {
-  latest as Reference,
-  featureFilter,
-  expression,
-  Color
-} from "@mapbox/mapbox-gl-style-spec";
+import {latest as Reference, featureFilter, expression, Color} from '@mapbox/mapbox-gl-style-spec';
 
 // See https://github.com/mapbox/vector-tile-spec/blob/b87a6a16abc3fcda9ea3f0a68264b40f48e039f3/2.1/vector_tile.proto#L7-L13
 const GEOM_TYPES = {
@@ -25,7 +20,7 @@ const GEOM_TYPES = {
  * @param  {object} globalProperties {zoom: current zoom}
  * @return {object[]}                Filtered features
  */
-export function filterFeatures({ features, filter, globalProperties = {} }) {
+export function filterFeatures({features, filter, globalProperties = {}}) {
   if (!features || features.length === 0) return [];
 
   // filterFn will be a function that returns a boolean
@@ -46,13 +41,9 @@ export function filterFeatures({ features, filter, globalProperties = {} }) {
 // object
 // features expected to be
 // {sourceName: {layerName: [features]}}
-export function findFeaturesStyledByLayer({
-  features,
-  layer,
-  globalProperties
-}) {
+export function findFeaturesStyledByLayer({features, layer, globalProperties}) {
   // features matching the source and source-layer
-  const sourceLayerFeatures = features[layer.source][layer["source-layer"]];
+  const sourceLayerFeatures = features[layer.source][layer['source-layer']];
   if (!sourceLayerFeatures) return [];
 
   if (layer.filter && layer.filter.length > 0) {
@@ -73,7 +64,7 @@ function visitProperties(layer, options, callback) {
     if (!properties) return;
     Object.keys(properties).forEach(key => {
       callback({
-        layer: layer,
+        layer,
         path: [layer.id, propertyType, key],
         key,
         value: properties[key],
@@ -86,10 +77,10 @@ function visitProperties(layer, options, callback) {
   }
 
   if (options.paint) {
-    inner(layer, "paint");
+    inner(layer, 'paint');
   }
   if (options.layout) {
-    inner(layer, "layout");
+    inner(layer, 'layout');
   }
 }
 
@@ -112,7 +103,7 @@ function getPropertyReference(propertyName) {
 export function parseProperties(layer, globalProperties) {
   // An array of Property objects for this specific layer
   const layerProperties = [];
-  visitProperties(layer, { paint: true }, property =>
+  visitProperties(layer, {paint: true}, property =>
     layerProperties.push(parseProperty(property, globalProperties))
   );
 
@@ -120,10 +111,7 @@ export function parseProperties(layer, globalProperties) {
 }
 
 function parseProperty(property, globalProperties) {
-  const exp = expression.normalizePropertyExpression(
-    property.value,
-    property.reference
-  );
+  const exp = expression.normalizePropertyExpression(property.value, property.reference);
   const result = exp.evaluate(globalProperties);
 
   // NOTE: eventually we could potentially return the function itself
@@ -135,8 +123,8 @@ function parseProperty(property, globalProperties) {
 
   // Coerce Color to rgba array
   if (result instanceof Color) {
-    return { [property["key"]]: result.toArray() };
+    return {[property.key]: result.toArray()};
   }
 
-  return { [property["key"]]: result };
+  return {[property.key]: result};
 }
