@@ -1,6 +1,4 @@
-import { generateDeckLineFeatures } from "./generate-deck-features";
-import { findFeaturesStyledByLayer, visitProperties } from "./mapbox-style";
-import { SUPPORTED_MAPBOX_LAYER_TYPES } from "./constants";
+import { findFeaturesStyledByLayer } from "./mapbox-style";
 
 // var style = require("../tests/fixtures/style/osm-liberty.json");
 // // vt2geojson https://mbtiles.nst.guide/services/openmaptiles/us/tiles/12/666/1433.pbf > openmaptiles-12-666-1433.json
@@ -12,52 +10,104 @@ import { SUPPORTED_MAPBOX_LAYER_TYPES } from "./constants";
 // });
 // var zoom = 12;
 
-// features expected to be
-// {sourceName: {layerName: [features]}}
-export function parseMapboxStyle(options = {}) {
-  const { style, features, zoom } = options;
+/**
+ * Generate a new deck.gl layer for each StyleJSON layer
+ *
+ * @param  {object[]} layers StyleJSON layers
+ * @return {objcet[]}        [description]
+ */
+const globalProperties = { zoom };
+export function generateLayers(styleJson, globalProperties) {
+  // TODO: a source can have a `url` argument, which means it has a hosted
+  // TileJSON, whose properties need to be merged with the source defined in the
+  // StyleJSON
+  // In this case need to fetch the JSON
+  const { sources, layers } = styleJson;
+  const deckLayers = [];
 
-  const globalProperties = { zoom: zoom };
-  const generatedFeatures = {};
-  // Instantiate arrays in generatedFeatures
-  SUPPORTED_MAPBOX_LAYER_TYPES.forEach(layer_type => {
-    generatedFeatures[layer_type] = [];
-  });
+  for (const layer of layers) {
+    deckLayers.push(generateLayer(sources, layer, globalProperties));
+  }
 
+  return deckLayers;
+}
 
-  // Since each feature can be styled more than once, you need to loop over
-  // layers, not features
-  for (const layer of style.layers) {
-    // Skip if not a supported layer type
-    if (!SUPPORTED_MAPBOX_LAYER_TYPES.includes(layer.type)) continue;
+const FILTERABLE_LAYERS = [
+  "fill",
+  "line",
+  "symbol",
+  "circle",
+  "fill-extrusion"
+];
 
-    // Features relevant to this layer
-    const layerFeatures = findFeaturesStyledByLayer({
-      features,
+function generateLayer(sources, layer, globalProperties) {
+  const { type } = layer;
+
+  // Parse property descriptions into values, resolving zoom
+  const properties = parseProperties(layer, globalProperties);
+
+  // Convert from Mapbox to Deck properties
+  const deckProperties = {};
+  for (const property of properties) {
+    const key = Object.keys(property)[0];
+    deckProperties[PROPERTY_XW[key]] = property[key];
+  }
+
+  // Make dataTransform function to filter data on each deck.gl layer
+  let dataTransform;
+  if (FILTERABLE_LAYERS.includes(type)) {
+    dataTransform = constructDataTransform(layer, globalProperties);
+  }
+
+  // Render deck.gl layers
+  switch (type) {
+    case "background":
+      return generateBackgroundLayer(
+        sources,
+        layer,
+        deckProperties,
+        dataTransform
+      );
+    case "fill":
+      return generateFillLayer(sources, layer, deckProperties, dataTransform);
+    case "line":
+      return generateLineLayer(sources, layer, deckProperties, dataTransform);
+    case "symbol":
+      return generateSymbolLayer(sources, layer, deckProperties, dataTransform);
+    case "raster":
+      return generateRasterLayer(sources, layer, deckProperties, dataTransform);
+    case "circle":
+      return generateCircleLayer(sources, layer, deckProperties, dataTransform);
+    case "fill-extrusion":
+      return generateFillExtrusionLayer(
+        sources,
+        layer,
+        deckProperties,
+        dataTransform
+      );
+    case "heatmap":
+      return generateHeatmapLayer(
+        sources,
+        layer,
+        deckProperties,
+        dataTransform
+      );
+    // case "hillshade":
+    //   return generateHillshadeLayer(sources, layer);
+    default:
+      console.warn(`Invalid/unsupported layer type: ${type}`);
+  }
+}
+
+function constructDataTransform(layer, globalProperties) {
+  // Filter layer's data
+  function dataTransform(data) {
+    return findFeaturesStyledByLayer({
+      features: data,
       layer,
       globalProperties
     });
-    if (!layerFeatures || layerFeatures.length === 0) continue;
-
-    // An array of Property objects for this specific layer
-    const layerProperties = [];
-    visitProperties(layer, { paint: true }, property =>
-      layerProperties.push(property)
-    );
-
-    let deckFeatures;
-    if (layer.type === "line") {
-      deckFeatures = generateDeckLineFeatures({
-        features: layerFeatures,
-        properties: layerProperties,
-        globalProperties
-      });
-    }
-
-    if (deckFeatures) {
-      generatedFeatures[layer.type].push(deckFeatures);
-    }
   }
 
-  return generatedFeatures;
+  return dataTransform;
 }
