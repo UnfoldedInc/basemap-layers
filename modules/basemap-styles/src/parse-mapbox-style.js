@@ -1,8 +1,8 @@
-import { findFeaturesStyledByLayer } from "./mapbox-style";
+import {findFeaturesStyledByLayer} from './mapbox-style';
 
 // globalProperties' type:
 // https://github.com/maplibre/maplibre-gl-js/blob/2112766af5d68a7ea885156c8c186c72a4e912ca/src/style-spec/expression/index.js#L41-L47
-const globalProperties = { zoom: 0 };
+const globalProperties = {zoom: 0};
 
 /**
  * Generate a new deck.gl layer for each StyleJSON layer
@@ -15,7 +15,7 @@ export function generateLayers(styleJson, globalProperties) {
   // TileJSON, whose properties need to be merged with the source defined in the
   // StyleJSON
   // In this case need to fetch the JSON
-  const { sources, layers } = styleJson;
+  const {sources, layers} = styleJson;
   const deckLayers = [];
 
   for (const layer of layers) {
@@ -25,13 +25,7 @@ export function generateLayers(styleJson, globalProperties) {
   return deckLayers;
 }
 
-const FILTERABLE_LAYERS = [
-  "fill",
-  "line",
-  "symbol",
-  "circle",
-  "fill-extrusion"
-];
+const FILTERABLE_LAYERS = ['fill', 'line', 'symbol', 'circle', 'fill-extrusion'];
 
 /**
  * Generate single deck.gl layer from Mapbox layer
@@ -42,7 +36,7 @@ const FILTERABLE_LAYERS = [
  * @return {object}                  deck.gl layer
  */
 function generateLayer(sources, layer, globalProperties) {
-  const { type } = layer;
+  const {type} = layer;
 
   // Parse property descriptions into values, resolving zoom
   const properties = parseProperties(layer, globalProperties);
@@ -67,37 +61,22 @@ function generateLayer(sources, layer, globalProperties) {
 
   // Render deck.gl layers
   switch (type) {
-    case "background":
-      return generateBackgroundLayer(
-        sources,
-        layer,
-        deckProperties,
-        dataTransform
-      );
-    case "fill":
+    case 'background':
+      return generateBackgroundLayer(sources, layer, deckProperties, dataTransform);
+    case 'fill':
       return generateFillLayer(sources, layer, deckProperties, dataTransform);
-    case "line":
+    case 'line':
       return generateLineLayer(sources, layer, deckProperties, dataTransform);
-    case "symbol":
+    case 'symbol':
       return generateSymbolLayer(sources, layer, deckProperties, dataTransform);
-    case "raster":
+    case 'raster':
       return generateRasterLayer(sources, layer, deckProperties, dataTransform);
-    case "circle":
+    case 'circle':
       return generateCircleLayer(sources, layer, deckProperties, dataTransform);
-    case "fill-extrusion":
-      return generateFillExtrusionLayer(
-        sources,
-        layer,
-        deckProperties,
-        dataTransform
-      );
-    case "heatmap":
-      return generateHeatmapLayer(
-        sources,
-        layer,
-        deckProperties,
-        dataTransform
-      );
+    case 'fill-extrusion':
+      return generateFillExtrusionLayer(sources, layer, deckProperties, dataTransform);
+    case 'heatmap':
+      return generateHeatmapLayer(sources, layer, deckProperties, dataTransform);
     // case "hillshade":
     //   return generateHillshadeLayer(sources, layer);
     default:
