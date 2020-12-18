@@ -12,7 +12,7 @@ The `BasemapLayer` approach of rendering basemaps using a true deck.gl layer has
 
 ## Goals
 
-A software stack that can render commercial-auality, world-class basemap is a very complex thing. This module is NOT intended to be a replacement for specialized basemap software. The following goals and non-goals are intended to help set reasonable the expectations for prospective users:
+A software stack that can render a commercial-quality, world-class basemap is a very complex thing. This module is NOT intended to be a replacement for specialized basemap software. The following goals and non-goals are intended to help set reasonable the expectations for prospective users:
 
 Goals for the deck.gl `BaseMapLayer` include:
 - **A backdrop basemap** - For the ~90% of deck.gl applications where the key visuals are provided by the remaining deck.gl layers, and the basemap is mainly a “backdrop” that provides visual context.
