@@ -1,24 +1,6 @@
 # basemap-layers
 
-> Note that this project has limited goals and scope. It is not intended to be a replacement for commercial basemaps, and it does not provide the level of support that is provided by commercial basemaps. The developer team behind this module certainly welcomes contributors and funding, but we are not currently able to provide the levels of active support for the community as the core deck.gl project.
-
-[deck.gl](https://deck.gl) basemap layers.
-
-The primary export is the `BaseMapLayer` layer, which accepts
-- [A vector tile URL]()
-- [A style specification]()
-
-## Overview
-
-Renders the desired datasets via a composite deck.gl layer that builds on `MVTTileLayer` or `TerrainLayer`.
-
-## License
-
-MIT License
-
-## Background
-
-The `basemap-layers` module provides a deck.gl `BaseMapLayer` that can render a basemap showing geography with water, land, rivers, roads, labels etc.
+The `basemap-layers` module provides a [deck.gl](https://deck.gl) `BaseMapLayer` that can render a basemap showing geography with water, land, rivers, roads, labels etc.
 
 In contrast to other basemap integrations available for deck.gl (primarily Mapbox, Google Maps, ArcGIS etc) the `BaseMapLayer` is a standard deck.gl `CompositeLayer` subclass, that renders basemap geometry using other deck.gl layers such as the `MVTTileLayer`, `TerrainLayer` and `TextLayer`.
 
@@ -75,3 +57,11 @@ Beyond basemap serving, there are some mapbox specific features in kepler.gl.
 While deck.gl maintainers are very supportive of the `BaseMapLayer`, it is kept separate from deck.gl because of concerns that it could become a magnet for a long list of detailed feature requests, clarification discussions and debugging asks from users around the world. 
 
 To avoid overwhelming limited support resources this repository is kept searate and clearly marked as not covered by deck.gl maintainers.
+
+he primary export is the `BaseMapLayer` layer, which accepts
+- [A vector tile URL]()
+- [A style specification]()
+
+## License
+
+MIT License
