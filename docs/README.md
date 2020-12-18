@@ -56,7 +56,7 @@ Beyond basemap serving, there are some mapbox specific features in kepler.gl.
 
 While deck.gl maintainers are very supportive of the `BaseMapLayer`, it is kept separate from deck.gl because of concerns that it could become a magnet for a long list of detailed feature requests, clarification discussions and debugging asks from users around the world. 
 
-To avoid overwhelming limited support resources this repository is kept searate and clearly marked as not covered by deck.gl maintainers.
+To avoid overwhelming limited support resources this repository is kept separate and clearly marked as not covered by deck.gl maintainers.
 
 he primary export is the `BaseMapLayer` layer, which accepts
 - [A vector tile URL]()
